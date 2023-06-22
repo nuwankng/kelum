@@ -23,6 +23,7 @@ public class AreacategoryController {
     @GetMapping( path = "/list", produces = "application/json")
     public List<Areacategory> get() {
 
+      //helloo
         List<Areacategory> areacategorys = this.areacategoryDao.findAll();
 
         areacategorys = areacategorys.stream().map(
