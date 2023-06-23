@@ -31,7 +31,7 @@ public class PluckingController {
         String kankaniid = params.get("kankaniid");
         String date = params.get("date");
 
-        System.out.println(date);
+//        System.out.println(date);
 
         List<Plucking> pluckings = this.pluckingDao.findAll();
 
@@ -54,17 +54,56 @@ public class PluckingController {
     @ResponseStatus(HttpStatus.CREATED)
     public HashMap<String,String> add(@RequestBody Plucking plucking) {
 
-        System.out.println("Checkk"+plucking);
+//        System.out.println("Checkk"+plucking);
 
         HashMap<String,String> responce = new HashMap<>();
         String errors="";
 
         if(errors=="") pluckingDao.save(plucking);
-//
-//        else errors = "Server Validation Errors : <br>"+errors;
 
         responce.put("id",String.valueOf(plucking.getId()));
         responce.put("url","/pluckings/"+plucking.getId());
+        responce.put("errors",errors);
+
+        return responce;
+
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String,String> update(@RequestBody Plucking plucking) {
+
+        HashMap<String,String> responce = new HashMap<>();
+        String errors="";
+
+        if(errors=="") pluckingDao.save(plucking);
+        else errors = "Server Validation Errors : <br>"+errors;
+
+        responce.put("id",String.valueOf(plucking.getId()));
+        responce.put("url","/pluckings/"+plucking.getId());
+        responce.put("errors",errors);
+
+        return responce;
+
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String,String> delete(@PathVariable Integer id) {
+
+        HashMap<String,String> responce = new HashMap<>();
+        String errors="";
+
+        Plucking plucking = pluckingDao.findByMyId(id);
+
+        if(plucking==null)
+            errors = errors+"<br> Plucking Does Not Existed.";
+
+        if(errors=="") pluckingDao.delete(plucking);
+        else errors = "Server Validation Errors : <br>"+errors;
+
+        responce.put("id",String.valueOf(id));
+        responce.put("url","/employees/"+id);
         responce.put("errors",errors);
 
         return responce;

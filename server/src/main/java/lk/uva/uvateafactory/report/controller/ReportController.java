@@ -2,6 +2,7 @@ package lk.uva.uvateafactory.report.controller;
 
 import lk.uva.uvateafactory.report.dao.CountByAreaDao;
 import lk.uva.uvateafactory.report.dao.CountByDesignationDao;
+import lk.uva.uvateafactory.report.dao.TeaCropSummaryDao;
 import lk.uva.uvateafactory.report.entity.CountByArea;
 import lk.uva.uvateafactory.report.entity.CountByDesignation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ReportController {
 
     @Autowired
     private CountByAreaDao countByAreaDao;
+
+    @Autowired
+    private TeaCropSummaryDao teaCropSummary;
 
     @GetMapping(path ="/countbydesignation",produces = "application/json")
     public List<CountByDesignation> getDesignation() {
@@ -61,6 +65,29 @@ public class ReportController {
         }
 
         return areas;
+    }
+
+    @GetMapping(path ="/tea",produces = "application/json")
+    public void getTeas() {
+
+        List<TeaCropSummaryDao> teaCropSummaries = this.teaCropSummary.teacropsummary();
+        long totalCount = 0;
+
+        for(TeaCropSummaryDao teacrop: teaCropSummaries ) {
+            System.out.println("Area"+teacrop);
+        }
+
+//        for (CountByArea countByArea : areas) {
+//            totalCount += countByArea.getCount();
+//        }
+//
+//        for (CountByArea countByArea : areas) {
+//            long count = countByArea.getCount();
+//            double percentage = (double) count / totalCount * 100;
+//            percentage = Math.round(percentage * 100.0) / 100.0;
+//            countByArea.setPercentage(percentage);
+//        }
+
     }
 
 }

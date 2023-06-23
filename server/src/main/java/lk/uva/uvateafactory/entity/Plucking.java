@@ -22,9 +22,12 @@ public class Plucking {
     @Basic
     @Column(name = "time")
     private Time time;
+
     @Basic
     @Column(name = "qty")
+    @RegexPattern(reg = "^\\d{1,2}$", msg = "Invalid Quantity")
     private Integer qty;
+
     @Basic
     @Column(name = "bonus")
     private Integer bonus;
